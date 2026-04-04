@@ -18,6 +18,9 @@ const HomeScreen = () => {
         setFilteredData([]);
       } else {
         const res = await fetch(`https://dummyjson.com/users/search?q=${debouncedValue.trim()}`);
+        if (!res.ok) {
+          throw new Error("HTTP error " + res.status);
+        }
         const data = await res.json();
         console.log('Search results: ', data);
         setFilteredData(data?.users?.map(user => ({userId: user.id, fullName: user.firstName+' '+user.lastName})) || []);
