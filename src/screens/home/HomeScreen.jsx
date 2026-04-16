@@ -1,11 +1,12 @@
 import { useEffect, useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, TextInput, FlatList } from 'react-native'
 import TaskItem from './components/TaskItem'
-// import { AsyncStorage } from '@react-native-async-storage/async-storage'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 const HomeScreen = () => {
   const [inputTask, setInputTask] = useState('')
   const [tasksList, setTasksList] = useState([])
+  const [isLoaded, setIsLoaded] = useState(false)
 
   const handleAddTask = () => {
     if(inputTask?.trim().length) {
@@ -25,31 +26,28 @@ const HomeScreen = () => {
     const newTasksList = tasksList.filter(itm => itm.id !== item.id)
     setTasksList(newTasksList)
   }
-  
-  /* useEffect(() => {
-    const loadTasks = async () => {
-      try {
-        const storedTasks = await AsyncStorage.getItem('TASKS');
-        if (storedTasks) {
-          setTasksList(JSON.parse(storedTasks));
-        }
-      } catch (err) {
-        console.error('Error while fetching tasks from Async Storage: ', err)
+  /*
+  useEffect(() => {
+    const loadSavedTasks = async() => {
+      const tasksData = await AsyncStorage.getItem('TASKS');
+      if(tasksData) {
+        setTasksList(JSON.parse(tasksData))
       }
+      setIsLoaded(true)
     }
-    loadTasks()
+
+    loadSavedTasks()
   }, [])
 
   useEffect(() => {
-    const saveTasksList = async () => {
-      try {
-        await AsyncStorage.setItem('TASKS', JSON.stringify(tasksList))
-      } catch(err) {
-        console.error('Error while saving in Async Storage: ', err)
-      }
+    if(!isLoaded) return
+
+    const saveTasks = async() => {
+      await AsyncStorage.setItem('TASKS', JSON.stringify(tasksList))
     }
-    saveTasksList()
-  }, [tasksList]) */
+    saveTasks()
+  }, [tasksList, isLoaded])
+  */
 
   return (
     <View style={styles.container}>
