@@ -16,7 +16,7 @@ const HomeScreen = () => {
         setTime(prevTime => prevTime+1);
       }, 1000); */
 
-      startTimeRef.current = Date.now() - time * 1000; //"resume" timestamp after app came to foreground from bg 
+      startTimeRef.current = Date.now() - time * 1000; //setting Start time stamp of timer. Subtracting the elapsed time, so that the difference with current time includes that elapsed time as well.
 
       timerRef.current = setInterval(() => {
         const elapsedTime = Math.floor((Date.now() - startTimeRef.current) / 1000);
